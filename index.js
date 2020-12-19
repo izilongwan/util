@@ -1,46 +1,41 @@
 const isObject = (value) => value && typeof value === 'object';
-/**
- * 深拷贝
- * @param {Object} target 克隆目标
- * @param {Object} origin 克隆对象
- */
-const deepClone = (target, origin = {}) => {
-  const types = [Set, Map, WeakMap, WeakSet, Date, RegExp];
+// const deepClone = (target, origin = {}) => {
+//   const types = [Set, Map, WeakMap, WeakSet, Date, RegExp];
 
 
-  const clone = (target, wm = new WeakMap()) => {
-    const value = wm.get(target);
+//   const clone = (target, wm = new WeakMap()) => {
+//     const value = wm.get(target);
 
-    if (value) {
-      return value;
-    }
+//     if (value) {
+//       return value;
+//     }
 
-    const Constructor = target.constructor;
+//     const Constructor = target.constructor;
 
-    if (types.includes(Constructor)) {
-      return new Constructor(target);
-    }
+//     if (types.includes(Constructor)) {
+//       return new Constructor(target);
+//     }
 
-    const descriptors = Object.getOwnPropertyDescriptors(target), // 获取属的属性描述符
-          cloneObj = Object.create(Reflect.getPrototypeOf(target), descriptors); // 继承原型
+//     const descriptors = Object.getOwnPropertyDescriptors(target), // 获取属的属性描述符
+//           cloneObj = Object.create(Reflect.getPrototypeOf(target), descriptors); // 继承原型
 
-    // 设置hash，防止成环
-    wm.set(target, cloneObj);
+//     // 设置hash，防止成环
+//     wm.set(target, cloneObj);
 
-    for (const key of Reflect.ownKeys(target)) {
-      const value = target[key];
+//     for (const key of Reflect.ownKeys(target)) {
+//       const value = target[key];
 
-      cloneObj[key] = isObject(value) ? clone(value, wm) : value;
-    }
+//       cloneObj[key] = isObject(value) ? clone(value, wm) : value;
+//     }
 
-    return cloneObj;
-  }
+//     return cloneObj;
+//   }
 
-  return {
-    ...clone(origin),
-    ...clone(target)
-  }
-}
+//   return {
+//     ...clone(origin),
+//     ...clone(target)
+//   }
+// }
 
 const bar = {
   str: 'string',
@@ -63,12 +58,13 @@ const bar = {
     date: new Date(),
     regexp: /\s/gi,
     set: new Set([1, 2, 3, 4, 5]),
-    map: new Map([[{}, {}]]),
+    map: new Map([[{1: 1}, {2: 2}]]),
     [Symbol(5)]: Symbol(5),
   bigInt: BigInt(123)
 }
 
 bar.loop = bar;
+bar.map.set(bar, bar)
 
 const newBar = deepClone(bar, {a: 1, b:2})
 
@@ -185,3 +181,58 @@ function tab (x, y) {
 // tab.myCall({}, [1], 2);
 // tab.myApply({}, [1, 2]);
 // tab.myBind({})([1, 10], 1);
+
+
+/**
+ * 深拷贝
+ * @param {Object} target 克隆目标
+ * @param {Object} origin 克隆对象
+ */
+function deepClone(target, origin = {}) {
+  const types = [Set, Map, WeakMap, WeakSet, Date, RegExp];
+
+  const clone = (target, hash = new WeakMap()) => {
+    if (target === null || typeof target !== 'object') {
+      return target;
+    }
+
+    const value = hash.get(target);
+
+    if (value) {
+      return value;
+    }
+
+    const Constructor = target.constructor;
+
+    if (types.includes(Constructor)) {
+      const res = new Constructor(target);
+
+      hash.set(target, res);
+
+      return res;
+    }
+
+    const cloneObj = new Constructor();
+
+    hash.set(target, cloneObj);
+
+    for (const key of Reflect.ownKeys(target)) {
+      cloneObj[key] = clone(target[key], hash);
+    }
+
+    return cloneObj;
+  }
+
+  return {
+    ...clone(origin),
+    ...clone(target)
+  }
+}
+
+
+const cloneBar = deepClone(bar, {a: 1, b:2})
+
+for (const key of Reflect.ownKeys(bar)) {
+  console.log(key, bar[key] === cloneBar[key])
+}
+// console.log('cloneBar', cloneBar)
