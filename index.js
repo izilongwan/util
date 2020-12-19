@@ -236,3 +236,14 @@ for (const key of Reflect.ownKeys(bar)) {
   console.log(key, bar[key] === cloneBar[key])
 }
 // console.log('cloneBar', cloneBar)
+
+
+function myNew(fn) {
+  const ctx = {};
+
+  Object.setPrototypeOf(ctx, fn.constructor);
+
+  const res = fn.apply(ctx, [].slice.call(arguments, 1));
+
+  return isObject(res) ? res : ctx;
+}
