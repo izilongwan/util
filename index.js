@@ -247,3 +247,78 @@ function myNew(fn) {
 
   return isObject(res) ? res : ctx;
 }
+
+/**
+ * 生成器
+ * @param {Array} arr
+ */
+function generator(arr) {
+  let idx = 0,
+      len = arr.length;
+
+  return {
+    next: function() {
+      return {
+        value: arr[idx++],
+        done: idx > len ? true : false
+      }
+    }
+  }
+}
+
+arr = [1, 2, 3, 4];
+
+const iter = generator(arr);
+
+// console.log(iter.next())
+// console.log(iter.next())
+// console.log(iter.next())
+// console.log(iter.next())
+// console.log(iter.next())
+
+
+// 中间件函数
+const M = (functions) => {
+  const iter = generator(functions);
+
+  const init = () => {
+    nextDo(iter);
+  }
+
+  function* generator(functions) {
+    for (const item of functions) {
+      yield item;
+    }
+  }
+
+  function nextDo(iter) {
+    const { done, value } = iter.next();
+
+    value && value(() => {
+      if (!done) {
+        nextDo(iter);
+      }
+    })
+  }
+
+  init();
+};
+
+function test1(next) {
+  console.log(1);
+  next();
+}
+
+function test2(next) {
+  console.log(2);
+  next();
+}
+
+function test3(next) {
+  console.log(3, this);
+  next();
+}
+
+var array = [test1, test2, test3.bind({})];
+
+M(array);
