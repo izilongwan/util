@@ -212,10 +212,14 @@ function deepClone(target, origin = {}) {
       return res;
     }
 
-    const cloneObj = new Constructor();
+    // 获取对象属性描述符
+    const descriptors = Object.getOwnPropertyDescriptors(target);
+    // 添加属性描述符
+    const cloneObj = Object.create(Object.getPrototypeOf(target), descriptors);
 
     hash.set(target, cloneObj);
 
+    // 遍历所有属性
     for (const key of Reflect.ownKeys(target)) {
       cloneObj[key] = clone(target[key], hash);
     }
@@ -223,14 +227,15 @@ function deepClone(target, origin = {}) {
     return cloneObj;
   }
 
-  return {
-    ...clone(origin),
-    ...clone(target)
-  }
+  return Object.assign(
+    {},
+    origin,
+    clone(target)
+  );
 }
 
 
-const cloneBar = deepClone(bar, {a: 1, b:2})
+const cloneBar = deepClone(bar, { a: 1, b: 2 })
 
 for (const key of Reflect.ownKeys(bar)) {
   console.log(key, bar[key] === cloneBar[key])
