@@ -242,6 +242,124 @@ for (const key of Reflect.ownKeys(bar)) {
 }
 // console.log('cloneBar', cloneBar)
 
+/**
+ *
+ * @param {*} fn
+ * @param {*} delay
+ * @param {*} triggerNow
+ * @returns
+ */
+function debounce(fn, delay = 300, triggerNow = false) {
+  let t = null,
+      result = null;
+
+  const _ = (...args) => {
+    clearTimeout(t);
+
+    if (triggerNow) {
+      const exec = !t;
+
+      setTimeout(() => {
+        t = null;
+      }, delay);
+
+      exec && (result = fn.apply(this, args));
+      return result;
+    }
+
+    t = setTimeout(() => {
+      result = fn.apply(this, args);
+    }, delay)
+
+    return result;
+  }
+
+  _.remove = () => {
+    clearTimeout(t);
+    t = null;
+  }
+
+  return _
+}
+
+/**
+ *
+ * @param {*} fn
+ * @param {*} delay
+ * @returns
+ */
+function throttle(fn, delay = 300) {
+  let t  = null,
+      ft = Date.now();
+
+  return (...args) => {
+    let st = Date.now();
+
+    if (st - ft <= delay) {
+      ft = st;
+      return fn.apply(this, args);
+    }
+
+    clearTimeout(t);
+
+    t = setTimeout(() => {
+      return fn.apply(this, args);
+    })
+  }
+}
+
+/**
+ * 解析URL参数
+ * @param {string} url
+ * @returns object
+ */
+function parseUrlParams(url = '') {
+  url = url
+    ? url
+    : window.location.search.substr(1);
+
+  const values = url.split('&');
+
+  return values.reduce((prev, curr) => {
+    let [key, value] = curr.split('=');
+
+    value = decodeURIComponent(value);
+    value = isNaN(parseFloat(value)) ? value : parseFloat(value);
+
+    prev[key] = prev.hasOwnProperty(key)
+      ? [].cancat(prev[key], value)
+      : value;
+
+    return prev;
+  }, {})
+}
+
+
+/**
+ * 获取URL键名的值
+ * @param {string} params
+ * @param {string} url
+ * @returns any
+ */
+function getUrlParam(params = '', url = '') {
+  url = url
+    ? url
+    : window.location.search.substr(1);
+
+  const reg = new RegExp('(^|&)' + params + '=([^&]+)(&|$)');
+  const values = url.match(reg);
+
+  if (values && values.length) {
+    let value = decodeURIComponent(values[2]);
+
+    return isNaN(parseFloat(value))
+      ? value
+      : parseFloat(value);
+  }
+
+  return null;
+}
+
 
 function myNew(fn) {
   const ctx = {};
