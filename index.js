@@ -402,9 +402,9 @@ const iter = generator(arr);
 
 // 中间件函数
 const M = (functions) => {
-  const iter = generator(functions);
-
   const init = () => {
+    const iter = generator(functions);
+
     nextDo(iter);
   }
 
@@ -417,11 +417,11 @@ const M = (functions) => {
   function nextDo(iter) {
     const { done, value } = iter.next();
 
-    value && value(() => {
-      if (!done) {
-        nextDo(iter);
-      }
-    })
+    if (done) {
+      return;
+    }
+
+    value && value(() => nextDo(iter));
   }
 
   init();
