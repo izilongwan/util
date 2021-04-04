@@ -376,6 +376,29 @@ function myNew(fn) {
   return isObject(res) ? res : ctx;
 }
 
+
+/**
+ * 左边的__proto__上是否有右边的prototype
+ * @param {Object} tar
+ * @param {Object constructor} org
+ * @returns boolean
+ */
+function myInstanceOf(tar, org) {
+  var originPrototype = org.prototype,
+      theProto = Object.getPrototypeOf(tar);
+
+  while (theProto !== originPrototype) {
+
+    if (theProto === null) {
+      return false;
+    }
+
+    theProto = Object.getPrototypeOf(theProto);
+  }
+
+  return true;
+}
+
 /**
  * 生成器
  * @param {Array} arr
