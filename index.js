@@ -118,20 +118,20 @@ for (const key in foo) {
 Function.prototype.myCall = function (ctx) {
   ctx = ctx ? Object(ctx) : window;
 
-  const args = [].slice.call(arguments, 1),
-        len = args.length;
+  var args  = [].slice.call(arguments, 1),
+      len   = args.length,
+      param = [],
+      random = Math.random();
 
-  let param = [];
-
-  for (let i = 0; i < len; i++) {
+  for (var i = 0; i < len; i++) {
     param.push('args[' + i + ']');
   }
 
-  ctx.func = this;
+  ctx[random] = this;
 
-  const res = eval('ctx.func(' + param + ')');
+  var res = eval('ctx[random](' + param + ')');
 
-  delete ctx.func;
+  delete ctx[random];
 
   return res;
 }
@@ -139,18 +139,19 @@ Function.prototype.myCall = function (ctx) {
 Function.prototype.myApply = function (ctx, args) {
   ctx = ctx ? Object(ctx) : window;
 
-  const len = args.length,
-        param = [];
+  var len    = args.length,
+      param  = [],
+      random = Math.random();
 
-  for (let i = 0; i < len; i++) {
+  for (var i = 0; i < len; i++) {
     param.push('args[' + i + ']');
   }
 
-  ctx.func = this;
+  ctx[random] = this;
 
-  const res = eval('ctx.func(' + param + ')');
+  var res = eval('ctx[random](' + param + ')');
 
-  delete ctx.func;
+  delete ctx[random];
 
   return res;
 }
@@ -158,9 +159,9 @@ Function.prototype.myApply = function (ctx, args) {
 Function.prototype.myBind = function (ctx) {
   ctx = ctx ? Object(ctx) : window;
 
-  const self = this;
+  var self = this;
 
-  const func = function () {
+  var func = function () {
     return self.myApply(this instanceof func ? this : ctx, [].slice.call(arguments));
   }
 
@@ -238,7 +239,7 @@ function deepClone(target, origin = {}) {
 const cloneBar = deepClone(bar, { a: 1, b: 2 })
 
 for (const key of Reflect.ownKeys(bar)) {
-  console.log(key, bar[key] === cloneBar[key])
+  // console.log(key, bar[key] === cloneBar[key])
 }
 // console.log('cloneBar', cloneBar)
 
@@ -360,13 +361,17 @@ function getUrlParam(params = '', url = '') {
   return null;
 }
 
-
+/**
+ *
+ * @param {Function} fn
+ * @returns any
+ */
 function myNew(fn) {
-  const ctx = {};
+  var ctx = {};
 
-  Object.setPrototypeOf(ctx, fn.constructor);
+  Object.setPrototypeOf(ctx, fn.prototype);
 
-  const res = fn.apply(ctx, [].slice.call(arguments, 1));
+  var res = fn.apply(ctx, [].slice.call(arguments, 1));
 
   return isObject(res) ? res : ctx;
 }
