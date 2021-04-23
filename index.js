@@ -1,41 +1,51 @@
+/**
+ * let
+ * 1、同一作用域下不可重复声明
+ * 2、声明不会被提升，暂时性死区
+ * 3、只在该作用域下生效
+ */
+
+
+/**
+ * 箭头函数 =>
+ * 1、this指向由外层作用域决定，this指向固化
+ * 2、=> 不能作为构造函数来使用
+ * 3、没有arguments对象，rest运算符代替
+ * 4、在generator函数中，yield命令不能生效
+ */
+
+/**
+ * Object.keys() 遍历自身可枚举、非Symbol属性键名，并返回返回一个数组
+ * Object.values() 遍历自身可枚举、非Symbol属性键值，并返回一个数组
+ * Object.entries() 遍历自身可枚举、非Symbol属性，并返回一个类数组
+ * Object.getOwnPropertySymbols() 遍历自身Symbol属性，并返回一个数组
+ * Object.assign() 合并（浅拷贝）非继承、可枚举的属性（含Symbol属性）
+ * for in 遍历自身及继承的可枚举、非Symbol属性
+ * for of 遍历迭代对象
+ * JSON.stringify() 遍历自身可枚举属性
+ */
+
+
+/**
+ * 拷贝对象
+ * 1、深度克隆
+ * 2、圣杯模式
+ * 3、JSON.parse/JSON.stringify
+ */
+
+
+
+/**
+ * 引起回流的因素：
+ * 1、DOM节点的增删
+ * 2、DOM节点位置
+ * 3、DOM节点的尺寸
+ * 4、DOM节点的显示与否（display）
+ * 5、页面初始渲染
+ * 6、向浏览器请求样式信息（client getComputedStyle currentStyle offset scroll）
+ */
+
 const isObject = (value) => value && typeof value === 'object';
-// const deepClone = (target, origin = {}) => {
-//   const types = [Set, Map, WeakMap, WeakSet, Date, RegExp];
-
-
-//   const clone = (target, wm = new WeakMap()) => {
-//     const value = wm.get(target);
-
-//     if (value) {
-//       return value;
-//     }
-
-//     const Constructor = target.constructor;
-
-//     if (types.includes(Constructor)) {
-//       return new Constructor(target);
-//     }
-
-//     const descriptors = Object.getOwnPropertyDescriptors(target), // 获取属的属性描述符
-//           cloneObj = Object.create(Reflect.getPrototypeOf(target), descriptors); // 继承原型
-
-//     // 设置hash，防止成环
-//     wm.set(target, cloneObj);
-
-//     for (const key of Reflect.ownKeys(target)) {
-//       const value = target[key];
-
-//       cloneObj[key] = isObject(value) ? clone(value, wm) : value;
-//     }
-
-//     return cloneObj;
-//   }
-
-//   return {
-//     ...clone(origin),
-//     ...clone(target)
-//   }
-// }
 
 const bar = {
   str: 'string',
@@ -473,3 +483,25 @@ function test3(next) {
 var array = [test1, test2, test3.bind({})];
 
 M(array);
+
+/**
+ * 【原型链继承】         引用值共享
+ * 【借用构造函数继承】    父类原型无法继承
+ * 【组合继承】           父类构造函数执行类2次
+ * 【圣杯继承】
+ * 【class继承】
+ */
+
+// 圣杯继承
+const inherit = (() => {
+  function Buffer() {};
+
+  return (Org, Tar) => {
+    Buffer.prototype = Org.prototype;
+    Tar.prototype = new Buffer();
+    Tar.prototype.constructor = Tar;
+    Tar.prototype.superConstructor = Org;
+
+    return Tar;
+  }
+})();
