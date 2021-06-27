@@ -197,12 +197,13 @@ function tab (x, y) {
 /**
  * 深拷贝
  * @param {Object} target 克隆目标
- * @param {Object} origin 克隆对象
+ * @param {Object} origin 原始对象
  */
 function deepClone(target, origin = {}) {
   const types = [Set, Map, WeakMap, WeakSet, Date, RegExp];
 
-  const clone = (target, hash = new WeakMap()) => {
+  // IIFE 立即执行函数递归调用
+  const ret = (function _(target, hash = new WeakMap()) {
     if (target === null || typeof target !== 'object') {
       return target;
     }
@@ -232,16 +233,16 @@ function deepClone(target, origin = {}) {
 
     // 遍历所有属性
     for (const key of Reflect.ownKeys(target)) {
-      cloneObj[key] = clone(target[key], hash);
+      cloneObj[key] = _(target[key], hash);
     }
 
     return cloneObj;
-  }
+  })(target);
 
   return Object.assign(
     {},
     origin,
-    clone(target)
+    ret
   );
 }
 
@@ -249,7 +250,7 @@ function deepClone(target, origin = {}) {
 const cloneBar = deepClone(bar, { a: 1, b: 2 })
 
 for (const key of Reflect.ownKeys(bar)) {
-  // console.log(key, bar[key] === cloneBar[key])
+  console.log(key, bar[key] === cloneBar[key])
 }
 // console.log('cloneBar', cloneBar)
 
