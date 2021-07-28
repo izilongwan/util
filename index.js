@@ -196,8 +196,8 @@ function tab (x, y) {
 
 /**
  * 深拷贝
- * @param {Object} target 克隆目标
- * @param {Object} origin 原始对象
+ * @param {Object} target 被克隆对象
+ * @param {Object} origin 克隆对象
  */
 function deepClone(target, origin = {}) {
   const types = [Set, Map, WeakMap, WeakSet, Date, RegExp];
@@ -250,22 +250,22 @@ function deepClone(target, origin = {}) {
 const cloneBar = deepClone(bar, { a: 1, b: 2 })
 
 for (const key of Reflect.ownKeys(bar)) {
-  console.log(key, bar[key] === cloneBar[key])
+  // console.log(key, bar[key] === cloneBar[key])
 }
 // console.log('cloneBar', cloneBar)
 
 /**
  *
- * @param {*} fn
- * @param {*} delay
- * @param {*} triggerNow
+ * @param {Function} fn 方法
+ * @param {Number} delay 延迟毫秒数
+ * @param {Boolean} triggerNow 立即触发
  * @returns
  */
 function debounce(fn, delay = 300, triggerNow = false) {
   let t = null,
       result = null;
 
-  const _ = (...args) => {
+  const _ = function(...args) {
     clearTimeout(t);
 
     if (triggerNow) {
@@ -296,15 +296,15 @@ function debounce(fn, delay = 300, triggerNow = false) {
 
 /**
  *
- * @param {*} fn
- * @param {*} delay
+ * @param {Function} fn 方法
+ * @param {Number} delay 延迟毫秒数
  * @returns
  */
 function throttle(fn, delay = 300) {
   let t  = null,
       ft = Date.now();
 
-  return (...args) => {
+  return function(...args) {
     let st = Date.now();
 
     if (st - ft <= delay) {
@@ -322,8 +322,8 @@ function throttle(fn, delay = 300) {
 
 /**
  * 解析URL参数
- * @param {string} url
- * @returns object
+ * @param {String} url
+ * @returns {Object}
  */
 function parseUrlParams(url = '') {
   url = url
@@ -349,16 +349,16 @@ function parseUrlParams(url = '') {
 
 /**
  * 获取URL键名的值
- * @param {string} params
- * @param {string} url
+ * @param {String} key 提取的属性值
+ * @param {String} url 提取的字符串
  * @returns any
  */
-function getUrlParam(params = '', url = '') {
+function getUrlParam(key = '', url = '') {
   url = url
     ? url
     : window.location.search.substr(1);
 
-  const reg = new RegExp('(^|&)' + params + '=([^&]+)(&|$)');
+  const reg = new RegExp('(^|&)' + key + '=([^&]+)(&|$)');
   const values = url.match(reg);
 
   if (values && values.length) {
@@ -374,8 +374,8 @@ function getUrlParam(params = '', url = '') {
 
 /**
  *
- * @param {Function} fn
- * @returns any
+ * @param {Function} fn 方法
+ * @returns {Object}
  */
 function myNew(fn) {
   var ctx = {};
@@ -390,9 +390,9 @@ function myNew(fn) {
 
 /**
  * 左边的__proto__上是否有右边的prototype
- * @param {Object} tar
- * @param {Object constructor} org
- * @returns boolean
+ * @param {Object} tar 目标值
+ * @param {Object} org 原始的
+ * @returns {Boolean}
  */
 function myInstanceOf(tar, org) {
   var originPrototype = org.prototype,
@@ -493,11 +493,15 @@ M(array);
  * 【class继承】
  */
 
-// 圣杯继承
+/**
+ * 圣杯继承
+ * @param {Object} Org 被克隆对象
+ * @param {Object} Tar 克隆对象
+ */
 const inherit = (() => {
   function Buffer() {};
 
-  return (Org, Tar) => {
+  return (Org, Tar = {}) => {
     Buffer.prototype = Org.prototype;
     Tar.prototype = new Buffer();
     Tar.prototype.constructor = Tar;
