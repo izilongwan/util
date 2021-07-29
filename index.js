@@ -202,8 +202,8 @@ function tab (x, y) {
 function deepClone(target, origin = {}) {
   const types = [Set, Map, WeakMap, WeakSet, Date, RegExp];
 
-  // IIFE 立即执行函数递归调用
-  const ret = (function _(target, hash = new WeakMap()) {
+  // 函数递归调用
+  function _(target, hash = new WeakMap()) {
     if (target === null || typeof target !== 'object') {
       return target;
     }
@@ -229,6 +229,7 @@ function deepClone(target, origin = {}) {
     // 添加属性描述符
     const cloneObj = Object.create(Object.getPrototypeOf(target), descriptors);
 
+    // 添加hash中，防止循环引用
     hash.set(target, cloneObj);
 
     // 遍历所有属性
@@ -237,22 +238,21 @@ function deepClone(target, origin = {}) {
     }
 
     return cloneObj;
-  })(target);
+  };
 
   return Object.assign(
-    {},
     origin,
-    ret
+    _(target)
   );
 }
 
-
-const cloneBar = deepClone(bar, { a: 1, b: 2 })
+const o = { a: 1, b: 2 }
+const cloneBar = deepClone(bar, o)
 
 for (const key of Reflect.ownKeys(bar)) {
   // console.log(key, bar[key] === cloneBar[key])
 }
-// console.log('cloneBar', cloneBar)
+// console.log(cloneBar === o, o)
 
 /**
  *
@@ -291,7 +291,7 @@ function debounce(fn, delay = 300, triggerNow = false) {
     t = null;
   }
 
-  return _
+  return _;
 }
 
 /**
@@ -459,7 +459,7 @@ const M = (functions) => {
     if (done) {
       return;
     }
-
+    // vlaue中的参数是next，也就是下一个待执行的函数
     value && value(() => nextDo(iter));
   }
 
@@ -483,7 +483,7 @@ function test3(next) {
 
 var array = [test1, test2, test3.bind({})];
 
-M(array);
+// M(array);
 
 /**
  * 【原型链继承】         引用值共享
