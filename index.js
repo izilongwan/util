@@ -265,13 +265,15 @@ function debounce(fn, delay = 300, triggerNow = false) {
   let t = null,
       result = null;
 
-  const _ = function(...args) {
-    clearTimeout(t);
+  const _ = function() {
+    const args = [].slice.call(arguments);
+
+    t && clearTimeout(t);
 
     if (triggerNow) {
       const exec = !t;
 
-      setTimeout(() => {
+      t = setTimeout(() => {
         t = null;
       }, delay);
 
@@ -300,23 +302,24 @@ function debounce(fn, delay = 300, triggerNow = false) {
  * @param {Number} delay 延迟毫秒数
  * @returns
  */
-function throttle(fn, delay = 300) {
+ function throttle(fn, delay = 1000) {
   let t  = null,
-      ft = Date.now();
+      fTs = Date.now();
 
-  return function(...args) {
-    let st = Date.now();
-
-    if (st - ft <= delay) {
-      ft = st;
-      return fn.apply(this, args);
-    }
+  return function() {
+    const args = [].slice.call(arguments);
+    const lTs = Date.now();
 
     clearTimeout(t);
 
+    if (lTs - fTs >= delay) {
+      fTs = lTs;
+      return fn.apply(this, args);
+    }
+
     t = setTimeout(() => {
       return fn.apply(this, args);
-    })
+    }, delay)
   }
 }
 
