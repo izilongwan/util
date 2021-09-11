@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "vite": "^2.5.6"
+  },
   "scripts": {
-    "test:promise": "promises-aplus-tests promise.js"
+    "vite": "vite"
   },
   "repository": {
     "type": "git",
