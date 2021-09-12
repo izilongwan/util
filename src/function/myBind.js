@@ -1,16 +1,24 @@
-export function myBind (fn, ctx) {
+/**
+ * 手写Function.prototype.bind
+ * @param {Function} fn 执行的方法
+ * @param {Object} ctx 绑定的上下文
+ * @param {any} [args,] 不定参数
+ * @returns {any}
+ */
+export function myBind(fn, ctx) {
   ctx = ctx ? Object(ctx) : window;
 
-  var self = fn;
+  const args = [].slice.call(arguments, 2)
 
-  var func = function () {
-    return self.myApply(this instanceof func ? this : ctx, [].slice.call(arguments));
+  function myFunc () {
+    const newArgs = args.concat([].slice.call(arguments))
+    return fn.apply(this instanceof myFunc ? this : ctx, newArgs)
   }
 
   function Buffer() {}
 
-  Buffer.prototype = fn.prototype;
-  func.prototype = new Buffer();
+  Buffer.prototype = fn.prototype
+  myFunc.prototype = new Buffer()
 
-  return func;
+  return myFunc
 }

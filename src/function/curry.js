@@ -1,6 +1,6 @@
 /**
  * 柯里化函数  --> 将一个多参数函数转成多个单参数的函数（一个n元函数 --> n个一元函数）
- * 分步所执行的函数} fn
+ * @param {Function} fn 分步所执行的函数
  */
 
 export function curry (fn) {

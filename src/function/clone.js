@@ -3,7 +3,7 @@ import { deepClone, isObject } from '../object';
 /**
  * 拷贝函数的属性和方法
  * @param {Function} fn 
- * @returns Function
+ * @returns {Function}
  */
 export function clone (fn) {
   const self = fn;

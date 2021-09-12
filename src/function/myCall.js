@@ -1,7 +1,15 @@
-export function myCall (fn, ctx, args) {
+/**
+ * 手写Function.prototype.call
+ * @param {Function} fn 执行的方法
+ * @param {Object} ctx 绑定的上下文
+ * @param {any} [args,] 不定参数
+ * @returns {any}
+ */
+export function myCall (fn, ctx) {
   ctx = ctx ? Object(ctx) : window;
 
-  var len    = args.length,
+  var args = [].slice.call(arguments, 2)
+      len    = args.length,
       param  = [],
       random = Math.random();
 

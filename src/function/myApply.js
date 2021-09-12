@@ -1,3 +1,10 @@
+/**
+ * 手写Function.prototype.apply
+ * @param {Function} fn 执行的方法
+ * @param {Object} ctx 绑定的上下文
+ * @param {<any>Array} args 传递参数
+ * @returns {any}
+ */
 export function myApply (fn, ctx, args) {
   ctx = ctx ? Object(ctx) : window;
 
