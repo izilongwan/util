@@ -15,7 +15,7 @@ import * as _function from './src/function'
 
 const m = {
   array,
-  _async,
+  async: _async,
   bom,
   data,
   date,

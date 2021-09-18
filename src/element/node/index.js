@@ -1,6 +1,5 @@
 export * from './allChildren'
 export * from './children'
-export * from './domReady'
 export * from './getStyle'
 export * from './hasChildren'
 export * from './inserAfter'
