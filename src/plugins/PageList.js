@@ -150,4 +150,4 @@ export const PageList = (function (doc) {
 	}
 
 	return PageList;
-})(document);
+})(globalThis.document);

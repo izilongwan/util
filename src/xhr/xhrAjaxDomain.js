@@ -40,4 +40,4 @@ export const xhrAjaxDomain = (function (doc) {
 		}
 		doc.body.appendChild(frame);
 	}
-})(document);
+})(globalThis.document);

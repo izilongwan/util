@@ -161,4 +161,4 @@ export const PredictedMenu = (function (win, doc) {
 	}
 
 	return PredictedMenu;
-}(window, document));
+}(globalThis.window, globalThis.document));

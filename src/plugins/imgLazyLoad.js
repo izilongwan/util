@@ -31,4 +31,4 @@ export const imgLazyLoad = (function (win, doc) {
 			}
 		}
 	}
-})(window, document);
+})(globalThis.window, globalThis.document);

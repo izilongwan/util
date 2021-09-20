@@ -1,8 +1,7 @@
-node_modules
 .DS_Store
 yarn.lock
-dist
 index.js
 index.html
-lib
-build
+src
+tip.MD
+webpack.config.js

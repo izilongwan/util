@@ -130,4 +130,4 @@ export const xhr = (function (doc, win) {
       })
     }
   }
-})(document, window);
+})(globalThis.document, globalThis.window);

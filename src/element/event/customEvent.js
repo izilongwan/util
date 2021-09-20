@@ -2,7 +2,10 @@
  * 自定义事件
  */
 export class EventEmitter {
-  events = {};
+  // events = {};
+  constructor() {
+    this.events = {}
+  }
 
   on(name, myFn, n = Infinity) {
     if (this.events[name]) {

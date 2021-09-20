@@ -134,4 +134,4 @@ export const Waterfall = (function(doc, win) {
   };
 
   return Waterfall;
-})(document, window);
+})(globalThis.document, globalThis.window);

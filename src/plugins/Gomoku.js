@@ -337,4 +337,4 @@ export const Gomoku = (function (doc) {
   }
 
   return Gomoku;
-})(document);
+})(globalThis.document);

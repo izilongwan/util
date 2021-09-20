@@ -171,4 +171,4 @@ export const Magnifier = (function (doc, win) {
 	}
 
 	return Magnifier;
-})(document, window);
+})(globalThis.document, globalThis.window);

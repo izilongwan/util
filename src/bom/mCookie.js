@@ -2,6 +2,11 @@
  * cookie 写/删/读  操作
  */
 export const mCookie = (function (doc) {
+  if (!doc) {
+    console.log(`mCookie is not in browser`)
+    return {}
+  }
+
   return {
     set: function (key, value, seconds = -1) {
       doc.cookie = key + '=' + value + ';max-age=' + seconds;
@@ -36,4 +41,4 @@ export const mCookie = (function (doc) {
       return this;
     }
   }
-})(document);
+})(globalThis.document);

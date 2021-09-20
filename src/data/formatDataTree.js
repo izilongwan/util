@@ -4,10 +4,11 @@ export function formatDataTree(data, rootId = 0) {
           id = curr.id,
           pid = curr.pid;
 
-    map[id] = {
-      ...curr,
-      children: []
-    }
+    map[id] = Object.assign({}, curr, children)
+    // {
+    //   ...curr,
+    //   children: []
+    // }
 
     if (pid === rootId) {
       ret.push(map[id]);

@@ -33,4 +33,4 @@ export const xhrWindowName = (function (doc) {
       iframe.onload = getDatas(opt);
     }
   }
-})(document);
+})(globalThis.document);
