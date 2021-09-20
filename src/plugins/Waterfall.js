@@ -1,6 +1,6 @@
 import { addEvent } from '../element/event'
 import { getClientPort, getScrollOffset, getScrollSize } from '../element/position';
-import { throttle, debounce } from '../function'
+import { throttle, debounce } from '../func'
 
 /**
  * 图片瀑布流

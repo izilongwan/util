@@ -1,4 +1,4 @@
-import { throttle } from '../function'
+import { throttle } from '../func'
 
 /**
  * 五子棋

@@ -11,7 +11,7 @@ import * as regexp from './regexp'
 import * as string from './string'
 import * as url from './url'
 import * as xhr from './xhr'
-import * as _function from './function'
+import * as func from './func'
 
 const m = {
   array,
@@ -27,7 +27,7 @@ const m = {
   string,
   url,
   xhr,
-  _function,
+  func,
 }
 
 export {
@@ -44,7 +44,7 @@ export {
   string,
   url,
   xhr,
-  _function,
+  func,
 }
 
 export default m

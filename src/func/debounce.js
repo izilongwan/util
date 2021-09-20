@@ -6,8 +6,7 @@
  * @returns {Function}
  */
 export function debounce(fn, delay = 300, triggerNow = false) {
-  let t = null,
-      result = null;
+  let t = null
 
   const _ = function() {
     const args = [].slice.call(arguments);
@@ -15,13 +14,11 @@ export function debounce(fn, delay = 300, triggerNow = false) {
     t && clearTimeout(t);
 
     if (triggerNow && !t) {
-      t = setTimeout(() => {
-        t = null;
-      }, delay);
-
-      result = fn.apply(this, args)
-      return result;
+      t = -1
+      return fn.apply(this, args)
     }
+
+    let result = null
 
     t = setTimeout(() => {
       result = fn.apply(this, args);

@@ -1,7 +1,7 @@
 const { mode } = process.env
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
 
   entry: './src/index.js',
 
@@ -32,8 +32,6 @@ module.exports = {
         globalObject: 'this',
       }
   ,
-
-
 
   module: {
     rules: [
