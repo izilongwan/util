@@ -1,33 +1,36 @@
 export class Scheduler1 {
-  constructor(limit) {
+  constructor(limit = 2) {
     this.limit = limit;
     this.tasks = []; // 待执行的任务
     this.num = 0; // 正在执行的任务数量
   }
 
-  addTask(time, str) {
-    this.tasks.push([time, str]);
+  addTask(time, fn) {
+    this.tasks.push([time, fn]);
 
     this.start();
+    return this
   }
 
   start() {
     if (this.tasks.length) {
       if (this.num >= this.limit) {
-        return;
+        return this;
       }
 
-      const [time, str] = this.tasks.shift();
+      const [time, fn] = this.tasks.shift();
 
       this.num++;
 
-      setTimeout((str) => {
+      setTimeout((fn) => {
         this.num--;
-        console.log(str);
+        fn()
         this.start();
-      }, time * 1000, str);
+      }, time * 1, fn);
 
       this.start();
     }
+
+    return this
   }
 }

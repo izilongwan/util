@@ -1,37 +1,19 @@
-const { mode } = process.env
-
 module.exports = {
   mode: 'production',
 
   entry: './src/index.js',
 
-  experiments:
-    mode === 'esm'
-    ? { outputModule: true }
-    : {}
-  ,
-
-  output:
-    mode === 'esm'
-      ? {
-        filename: 'esm/index.js',
-        library: {
-          type: 'module',
-          export: 'default',
-        },
-        globalObject: 'this',
-      }
-      : {
-        filename: 'cjs/index.js',
-        library: {
-          name: 'util',
-          type: 'umd',
-          export: 'default',
-          umdNamedDefine: true,
-        },
-        globalObject: 'this',
-      }
-  ,
+  output: {
+    filename: 'index.js',
+    library: {
+      name: 'util',
+      type: 'umd',
+      export: 'default',
+      umdNamedDefine: true,
+    },
+    globalObject: 'this',
+    clean: true,
+  },
 
   module: {
     rules: [

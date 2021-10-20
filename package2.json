@@ -1,9 +1,15 @@
 {
   "name": "@izilong/util",
-  "version": "1.0.9",
+  "version": "1.0.8",
   "description": "@izilong/util",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "exports": {
+    ".": {
+      "node": "./dist/cjs/index.js",
+      "default": "./dist/esm/index.js"
+    }
+  },
   "files": [
     "dist",
     "src"
@@ -36,7 +42,11 @@
     ]
   },
   "scripts": {
-    "build": "npx webpack"
+    "esm-cjs": "node_modules/babel-cli/bin/babel.js src --out-dir lib",
+    "build:umd": "mode=umd npx webpack",
+    "build:esm": "mode=esm npx webpack",
+    "build:esm-wrap": "npm run build:esm && gen-esm-wrapper . ./dist/esm/index.js",
+    "build": "npm run build:umd && npm run build:esm-wrap"
   },
   "repository": {
     "type": "git",
