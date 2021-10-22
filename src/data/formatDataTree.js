@@ -1,29 +1,31 @@
-export function formatDataTree(data, rootId = 0) {
-  return data.reduce((prev, curr) => {
-    const { ret, map } = prev,
-          id = curr.id,
-          pid = curr.pid;
+export function formatDataTree(data, rootId) {
+  const newData = JSON.parse(JSON.stringify(data))
+  const map = newData.reduce((prev, curr) => {
+    prev[curr.id] = curr
+    return prev
+  }, {})
 
-    map[id] = Object.assign({}, curr, children)
-    // {
-    //   ...curr,
-    //   children: []
-    // }
+  return newData.reduce((prev, curr, idx, arr) => {
+    const { parentId } = curr
 
-    if (pid === rootId) {
-      ret.push(map[id]);
-    }
-    else {
-      const tar = map[pid];
-
-      if (tar && pid === tar.id) {
-        tar.children && tar.children.push(map[id]);
+    if (parentId === rootId) {
+      if (!prev[rootId]) {
+        prev[rootId] = {
+          id: rootId,
+          children: []
+        }
       }
+
+      prev[rootId].children.push(curr)
     }
 
-    return prev;
+    if (map[parentId] && parentId === map[parentId].id) {
+      !map[parentId].children && (map[parentId].children = [])
+      map[parentId].children.push(curr)
+    }
 
-  }, { ret: [], map: {} }).ret;
+    return prev
+  }, {})
 }
 
 const data = [
