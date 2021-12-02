@@ -3,7 +3,7 @@
  */
 export const mCookie = (function (doc) {
   if (!doc) {
-    console.log(`mCookie is not in browser`)
+    // console.log(`mCookie is not in browser`)
     return {}
   }
 

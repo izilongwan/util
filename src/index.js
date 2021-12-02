@@ -47,4 +47,6 @@ export {
   func,
 }
 
+module.hot && module.hot.accept()
+
 export default m

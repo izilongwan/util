@@ -1,3 +1,5 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
 module.exports = {
   mode: 'production',
 
@@ -36,5 +38,17 @@ module.exports = {
         exclude: /node_modules/,
       }
     ]
-  }
+  },
+
+  devServer: {
+    hot: true,
+    compress: true,
+    port: 3001,
+  },
+
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+    })
+  ],
 }
