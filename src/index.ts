@@ -31,7 +31,7 @@ const m = {
   string,
   url,
   xhr,
-  // func,
+  func,
 }
 
 export {
@@ -50,7 +50,7 @@ export {
   string,
   url,
   xhr,
-  // func,
+  func,
 }
 
 module?.hot?.accept()
