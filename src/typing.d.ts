@@ -3,3 +3,7 @@ interface NodeModule {
     accept: Function
   }
 }
+
+interface Window {
+  [key: string]: any
+}

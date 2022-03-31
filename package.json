@@ -1,10 +1,10 @@
 {
   "name": "@izilong/util",
-  "version": "1.1.21",
+  "version": "1.2.0",
   "description": "@izilong/util",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
-  "types": "./dist/index.js",
+  "types": "./dist/src/index.d.js",
   "files": [
     "dist",
     "src"
@@ -32,7 +32,7 @@
   "scripts": {
     "dev": "npx webpack serve --config build/dev.ts",
     "build": "npx webpack --config build/prod.ts",
-    "prepublish": "npm run build"
+    "publish": "npm run build && npm publish"
   },
   "repository": {
     "type": "git",

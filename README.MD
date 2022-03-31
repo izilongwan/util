@@ -10,7 +10,7 @@ $ or yarn add @izilong/util
 
 In ESM.js:
 ```js
-import * as util from '@izilong/util'
+import util from '@izilong/util'
 or import {
   array,
   async,
@@ -25,7 +25,7 @@ or import {
   string,
   url,
   xhr,
-  _function } from '@izilong/util'
+  func } from '@izilong/util'
 ```
 
 In Node.js:
@@ -45,5 +45,5 @@ or const {
   string,
   url,
   xhr,
-  _function } = require('@izilong/util')
+  func } = require('@izilong/util')
 ```
