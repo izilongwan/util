@@ -1,10 +1,10 @@
 {
   "name": "@izilong/util",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "@izilong/util",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
-  "types": "./dist/src/index.d.js",
+  "types": "./dist/index.d.js",
   "files": [
     "dist",
     "src"

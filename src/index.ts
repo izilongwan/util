@@ -53,6 +53,4 @@ export {
   func,
 }
 
-module?.hot?.accept()
-
 export default m
