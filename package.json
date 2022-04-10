@@ -39,7 +39,7 @@
     "url": "git+https://github.com/izilongwan/util.git"
   },
   "publishConfig": {
-    "@izilongwan:registry": "https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com/izilongwan"
   },
   "keywords": [],
   "author": "",
