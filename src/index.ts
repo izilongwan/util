@@ -13,17 +13,14 @@ import * as url from './url'
 import * as xhr from './xhr'
 import * as func from './func'
 
-import { LRUCache2, LRUCache } from './test'
-
 const m = {
-  LRUCache2,
-  LRUCache,
   array,
   async,
   bom,
   data,
   date,
   element,
+  func,
   geometric,
   object,
   plugins,
@@ -31,18 +28,16 @@ const m = {
   string,
   url,
   xhr,
-  func,
 }
 
 export {
-  LRUCache2,
-  LRUCache,
   array,
   async,
   bom,
   data,
   date,
   element,
+  func,
   geometric,
   object,
   plugins,
@@ -50,7 +45,6 @@ export {
   string,
   url,
   xhr,
-  func,
 }
 
 export default m

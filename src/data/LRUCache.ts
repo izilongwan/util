@@ -1,5 +1,3 @@
-import { ICommonObject } from '../types/typing'
-
 export class LRUCache {
   capacity: number
   cache: Map<string, any>
@@ -45,7 +43,7 @@ export class LRUCache {
 }
 
 export class LRUCache2 {
-  cache: ICommonObject = {}
+  cache: Record<string, any> = {}
   keys: string[] = []
   capacity: number
 
@@ -94,13 +92,12 @@ export class LRUCache2 {
     keys.push(key)
   }
 
-  remove(cache: ICommonObject, keys: string[]) {
+  remove(cache: Record<string, any>, keys: string[]) {
     const key = keys.shift()
 
     delete cache[key as string]
   }
 }
-
 // const lur = new LRUCache2()
 // lur.get(0)
 // lur.put(1, 1)

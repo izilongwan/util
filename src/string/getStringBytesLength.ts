@@ -1,5 +1,5 @@
 // 封装求取字符串长度
-export function getStringButesLength (target: string) {
+export function getStringBytesLength (target: string) {
 	var count = target.length,
 			len = count;
 
