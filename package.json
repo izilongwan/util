@@ -38,6 +38,9 @@
     "type": "git",
     "url": "git+https://github.com/izilongwan/util.git"
   },
+  "publishConfig": {
+    "@izilongwan:registry": "https://npm.pkg.github.com"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
