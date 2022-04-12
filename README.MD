@@ -1,37 +1,16 @@
 ### @izilong/util
 
-- Install｜安装
+- 安装｜install
 ```shell
 npm i @izilong/util
 ```
-
 ```shell
 yarn add @izilong/util
 ```
 
-
-## Use
+- 使用｜use in ES6
 ```js
 import util from '@izilong/util'
-```
-
-- ES6
-```js
-import {
-  array
-  async
-  bom
-  data
-  date
-  element
-  geometric
-  object
-  plugins
-  regexp
-  string
-  url
-  xhr
-  func } from '@izilong/util'
 ```
 
 - NODE
@@ -39,27 +18,9 @@ import {
 const util = require('@izilong/util')
 ```
 
-```js
-const {
-  array
-  async
-  bom
-  data
-  date
-  element
-  geometric
-  object
-  plugins
-  regexp
-  string
-  url
-  xhr
-  func } = require('@izilong/util')
-```
-
-
 ## API Reference
 
+- 纵览
 ```js
 util
   |-array

@@ -1,6 +1,6 @@
 {
   "name": "@izilong/util",
-  "version": "1.2.32",
+  "version": "1.2.36",
   "description": "@izilong/util",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
