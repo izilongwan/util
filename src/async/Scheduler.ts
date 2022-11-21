@@ -2,7 +2,7 @@ export class Schduler {
   private taskList: TaskPromise<any>[] = []
   private taskDoingCount = 0
 
-  constructor(private taskLimit: number = taskLimit) {
+  constructor(private taskLimit: number = 2) {
 
   }
 
