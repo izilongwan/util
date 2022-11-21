@@ -26,7 +26,6 @@ util
   |-array
   |-async
     -| Scheduler
-    -| Scheduler1
   |-bom
     -| domReady
     -| getBrowserType

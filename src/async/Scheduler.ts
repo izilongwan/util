@@ -1,31 +1,80 @@
-import { IPromiseFunction } from '../types/typing';
+class Schduler {
+  private task: TaskPromise<any>[] = []
+  private taskDoingCount = 0
 
-export class Scheduler {
-  limit: number// 并发最大值
-  doing: IPromiseFunction[] = [] // 正在运行的任务
-  tasks: IPromiseFunction[] = [] // 待运行的任务
+  constructor(private taskLimit: number = taskLimit) {
 
-  constructor(limit = 2) {
-    this.limit = limit;
   }
 
-  add(cb: IPromiseFunction) {
-    // cb 是一个异步函数，return Promise
-    return new Promise((resolve, reject) => {
-      cb.resolve = resolve;
-      this.doing.length < this.limit
-        ? this.run(cb)
-        : this.tasks.push(cb);
+  add(promise: PromiseCb) {
+    new Promise(resolve => {
+      const item = [promise, resolve] as TaskPromise<any>
+      this.task.push(item)
     })
+
+    return this
   }
 
-  run(cb: IPromiseFunction) {
-    this.doing.push(cb);
+  addAll(promises: PromiseCb[]) {
+    if (Array.isArray(promises)) {
+      promises.forEach((p) => this.add(p))
+    }
 
-    cb().then(() => {
-      cb.resolve();
-      this.doing.splice(this.doing.findIndex(cb), 1);
-      this.tasks.length && this.run(this.tasks.shift()!);
-    })
+    return this
+  }
+
+  private run() {
+    if (this.taskDoingCount < this.taskLimit) {
+      const item = this.task.shift()
+
+      if (!item) {
+        return this
+      }
+
+      const [promise, resolve] = item
+
+      promise().then(() => {
+        resolve()
+
+        this.taskDoingCount--
+        this.run()
+      })
+
+      this.taskDoingCount++
+      this.run()
+    }
+
+    return this
+  }
+
+  start() {
+    return this.run()
   }
 }
+
+type TaskPromise<T> = ([() => Promise<T>, (value?: unknown) => void])
+
+type PromiseCb = () => Promise<any>
+
+// function cb(ms: number) {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       resolve(ms)
+//       console.log(ms)
+//     }, ms);
+//   })
+// }
+
+// const list = [
+//   () => cb(1000),
+//   () => cb(3000),
+//   () => cb(2000),
+//   () => cb(2000),
+//   () => cb(1000),
+//   () => cb(1000),
+// ] as (PromiseCb)[]
+
+// new Schduler(2)
+//   .add(() => cb(2000))
+//   .addAll(list)
+//   .start()
