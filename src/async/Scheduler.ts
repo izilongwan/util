@@ -1,5 +1,5 @@
-class Schduler {
-  private task: TaskPromise<any>[] = []
+export class Schduler {
+  private taskList: TaskPromise<any>[] = []
   private taskDoingCount = 0
 
   constructor(private taskLimit: number = taskLimit) {
@@ -9,7 +9,7 @@ class Schduler {
   add(promise: PromiseCb) {
     new Promise(resolve => {
       const item = [promise, resolve] as TaskPromise<any>
-      this.task.push(item)
+      this.taskList.push(item)
     })
 
     return this
@@ -25,7 +25,7 @@ class Schduler {
 
   private run() {
     if (this.taskDoingCount < this.taskLimit) {
-      const item = this.task.shift()
+      const item = this.taskList.shift()
 
       if (!item) {
         return this

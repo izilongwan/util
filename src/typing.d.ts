@@ -6,4 +6,5 @@ interface NodeModule {
 
 interface Window {
   [key: string]: any
+  [key: number]: any
 }

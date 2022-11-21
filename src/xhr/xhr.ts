@@ -25,7 +25,7 @@ export const xhr = (function (doc, win) {
         dataType = (opt.dataType || 'JSON').toUpperCase(),
         data = opt.data || null,
         jsonp = opt.jsonp || 'callback',
-        jsonpCB = opt.jsonpCB || 'jQuery' + random() + '_' + new Date().getTime(),
+        jsonpCB: string = opt.jsonpCB || 'jQuery' + random() + '_' + new Date().getTime(),
         async = opt.async === false ? false : true,
         success = opt.success || function () {},
         error = opt.error || function () {},
@@ -50,7 +50,7 @@ export const xhr = (function (doc, win) {
 
         doc.body.appendChild(oS);
         doc.body.removeChild(oS);
-        win[jsonpCB as string] = function (data: any) {
+        win[jsonpCB] = function (data: any) {
           success(data);
         }
         return;
